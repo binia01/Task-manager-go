@@ -21,14 +21,15 @@ A simple RESTful API for managing tasks. You can create, view, update, and delet
     ```
 
 ## API Usage
-This project includes a Postman collection for testing and understanding the API.
+This project includes a Postman collection and curl for testing and understanding the API.
 
 ### Getting Started
-1. Open [Postman](https://www.postman.com/)
-2. Import the collection from `docs/postman_collection.json`
-3. Use the provided endpoints with appropriate payloads
+Open [Postman](https://.postman.co/workspace/My-Workspace~e85ab91d-850f-41f6-8c20-cb0459fbaf68/collection/42847133-a206412b-02ed-4c30-8eec-53822038a224?action=share&creator=42847133)
 
 Or view the docs online: [API Documentation](https://documenter.getpostman.com/view/42847133/2sB34iiefB)
+1. Click **“Run in Postman”** (top-right of the page)
+2. Postman will automatically open and load the collection for you
+3. Start making requests using the examples provided in the docs
 ## Base URL
 
 ```
