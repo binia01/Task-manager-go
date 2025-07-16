@@ -20,6 +20,15 @@ A simple RESTful API for managing tasks. You can create, view, update, and delet
     http://localhost:8080
     ```
 
+## API Usage
+This project includes a Postman collection for testing and understanding the API.
+
+### Getting Started
+1. Open [Postman](https://www.postman.com/)
+2. Import the collection from `docs/postman_collection.json`
+3. Use the provided endpoints with appropriate payloads
+
+Or view the docs online: [API Documentation](https://documenter.getpostman.com/view/42847133/2sB34iiefB)
 ## Base URL
 
 ```
