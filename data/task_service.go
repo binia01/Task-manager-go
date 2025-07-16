@@ -104,7 +104,7 @@ func DeleteTask(id string) (*models.Task, bool) {
 
 func connectDb() *mongo.Client {
 	// Set client options
-	clientOptions := options.Client().ApplyURI("mongodb+srv://<>username:<password>@cluster0.tj8um.mongodb.net/?retryWrites=true&w=majority")
+	clientOptions := options.Client().ApplyURI("mongodb+srv://<username>:<password>@cluster0.tj8um.mongodb.net/?retryWrites=true&w=majority")
 
 	// Connect to MongoDB
 	client, err := mongo.Connect(context.TODO(), clientOptions)
