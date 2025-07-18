@@ -4,6 +4,8 @@ go 1.24.5
 
 require github.com/gin-gonic/gin v1.10.1
 
+require github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+
 require (
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
