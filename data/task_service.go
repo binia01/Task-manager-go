@@ -13,14 +13,14 @@ import (
 )
 
 var db = connectDb()
-var collection = db.Database("Task-Database").Collection("Tasks")
+var task_collection = db.Database("Task-Database").Collection("Tasks")
 
 func GetAllTasks() []models.Task {
 	findOptions := options.Find()
 
 	var tasks []models.Task
 
-	cur, err := collection.Find(context.TODO(), bson.D{}, findOptions)
+	cur, err := task_collection.Find(context.TODO(), bson.D{}, findOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -43,7 +43,7 @@ func GetAllTasks() []models.Task {
 func GetTaskById(id string) (*models.Task, bool) {
 	var task models.Task
 
-	err := collection.FindOne(context.TODO(), bson.M{"id": id}).Decode(&task)
+	err := task_collection.FindOne(context.TODO(), bson.M{"id": id}).Decode(&task)
 	if err != nil {
 		return nil, false
 	}
@@ -60,14 +60,14 @@ func UpdateTask(id string, updatedTask models.Task) (*models.Task, bool) {
 			"status":      updatedTask.Status,
 		},
 	}
-	_, err := collection.UpdateOne(context.TODO(), filter, update)
+	_, err := task_collection.UpdateOne(context.TODO(), filter, update)
 
 	if err != nil {
 		return nil, false
 	}
 
 	var task models.Task
-	err = collection.FindOne(context.TODO(), filter).Decode(&task)
+	err = task_collection.FindOne(context.TODO(), filter).Decode(&task)
 	if err != nil {
 		return nil, false
 	}
@@ -77,25 +77,25 @@ func UpdateTask(id string, updatedTask models.Task) (*models.Task, bool) {
 func CreateTask(task models.Task) bool {
 	// Check if a task with the same ID already exists
 	var existingTask models.Task
-	err := collection.FindOne(context.TODO(), bson.M{"id": task.ID}).Decode(&existingTask)
+	err := task_collection.FindOne(context.TODO(), bson.M{"id": task.ID}).Decode(&existingTask)
 	if err == nil {
 		// Task with the same ID already exists
 		return false
 	}
 
 	// Proceed to insert the new task
-	_, err = collection.InsertOne(context.TODO(), task)
+	_, err = task_collection.InsertOne(context.TODO(), task)
 	return err == nil
 }
 
 func DeleteTask(id string) (*models.Task, bool) {
 	var task models.Task
-	err := collection.FindOne(context.TODO(), bson.M{"id": id}).Decode(&task)
+	err := task_collection.FindOne(context.TODO(), bson.M{"id": id}).Decode(&task)
 	if err != nil {
 		return nil, false
 	}
 
-	_, err = collection.DeleteOne(context.TODO(), bson.M{"id": id})
+	_, err = task_collection.DeleteOne(context.TODO(), bson.M{"id": id})
 	if err != nil {
 		return nil, false
 	}
