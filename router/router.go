@@ -1,16 +1,45 @@
 package router
 
-import(
+import (
 	"task-manager-go/controllers"
+	"task-manager-go/middleware"
+	"task-manager-go/models"
+
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter() *gin.Engine{
+func SetupRouter() *gin.Engine {
 	router := gin.Default()
-	router.GET("/tasks", controllers.GetTasks)
-	router.GET("/tasks/:id", controllers.GetTaskById)
-	router.POST("/tasks", controllers.CreateTask)
-	router.PUT("/tasks/:id", controllers.UpdateTask)
-	router.DELETE("/tasks/:id", controllers.DeleteTask)
+
+	// Auth routes
+	router.POST("/register", controllers.Register)
+	router.POST("/login", controllers.Login)
+
+	// User management
+	router.PATCH("/promote/:username",
+		middleware.AuthMiddleware(),
+		middleware.RoleMiddleware(models.AdminRole.String()),
+		controllers.UpdateRole,
+	)
+
+	// Task routes
+	taskRoutes := router.Group("/tasks", middleware.AuthMiddleware())
+	{
+		taskRoutes.GET("", controllers.GetTasks)
+		taskRoutes.GET("/:id", controllers.GetTaskById)
+		taskRoutes.POST("",
+			middleware.RoleMiddleware(models.AdminRole.String()),
+			controllers.CreateTask,
+		)
+		taskRoutes.PUT("/:id",
+			middleware.RoleMiddleware(models.AdminRole.String()),
+			controllers.UpdateTask,
+		)
+		taskRoutes.DELETE("/:id",
+			middleware.RoleMiddleware(models.AdminRole.String()),
+			controllers.DeleteTask,
+		)
+	}
+
 	return router
 }
