@@ -59,3 +59,53 @@ func UpdateTask(c *gin.Context) {
 	}
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "task updated successfully!", "task": newTask})
 }
+
+func Login(c *gin.Context) {
+	var reqUser models.User
+	if err := c.BindJSON(&reqUser); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid request"})
+		return
+	}
+
+	token, err := data.LoginUser(reqUser)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":      "Login Successful",
+		"access_token": token,
+	})
+}
+
+func Register(c *gin.Context) {
+	var newUser models.User
+	if err := c.BindJSON(&newUser); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid request"})
+		return
+	}
+
+	_, err := data.RegisterUser(newUser)
+	if err != nil {
+		c.JSON(http.StatusConflict, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":  "Register Successful",
+		"username": newUser.Username,
+	})
+}
+func UpdateRole(c *gin.Context) {
+	username := c.Param("username")
+	_, err := data.UpdateRole(username)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Update Successful",
+	})
+}
