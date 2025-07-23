@@ -1,10 +1,19 @@
-package models
+package Domain
 
 import (
 	"encoding/json"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+type Task struct {
+	ID          string    `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	DueDate     time.Time `json:"due_date"`
+	Status      string    `json:"status"`
+}
 
 type User struct {
 	ID       primitive.ObjectID `json:"_id" bson:"_id,omitempty"`
