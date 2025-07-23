@@ -2,13 +2,42 @@
 
 A simple RESTful API for managing tasks. This API uses MongoDB as the database to store task information. You can create, view, update, and delete tasks using standard HTTP methods. This API supports user authentication and authorization using JWT tokens. Only admin users can create, update, or delete tasks.
 
+---
+
+## Clean Architecture Update
+
+This project now follows the principles of Clean Architecture, which separates concerns into distinct layers for better maintainability, testability, and scalability. The main layers are:
+
+- **Domain:** Contains core business logic and entity definitions (e.g., `Task`, `User`, `Role`).
+- **Usecases:** Implements application-specific business rules and orchestrates interactions between repositories and entities.
+- **Repositories:** Handles data access and persistence, abstracting database operations for tasks and users.
+- **Infrastructure:** Provides supporting services such as JWT authentication, password hashing, and middleware for authentication and authorization.
+- **Delivery:** Manages HTTP routing and controllers, exposing the API endpoints and handling HTTP requests/responses.
+
+**Key Benefits:**
+- Clear separation of concerns.
+- Easy to swap out infrastructure (e.g., database, authentication) without affecting business logic.
+- Improved testability and code organization.
+
+**Directory Structure:**
+```
+/Domain         # Entities and core business logic
+/Usecases       # Application use cases
+/Repositories   # Data access and persistence
+/Infrastructure # Supporting services (auth, password, middleware)
+/Delivery       # HTTP controllers, routers, and entry point
+```
+
+All API functionality remains the same, but the codebase is now organized according to Clean Architecture best practices.
+
+
 ## How to Run
 
 1. **Clone the repository:**
     ```sh
     git clone https://github.com/yourusername/Task-manager-go.git
     cd Task-manager-go
-    git checkout auth
+    git checkout clean-architecture
     ```
 
 2. **Set up MongoDB:**
@@ -22,10 +51,12 @@ A simple RESTful API for managing tasks. This API uses MongoDB as the database t
 
 3. **Build and start the server:**
     ```sh
+    cd Delivery
     go run main.go
     ```
     or:
     ```sh
+    cd Delivery
     go run .
     ```
 
