@@ -1,9 +1,10 @@
 # Task-manager-go
 
-Description:
-This project is a Go-based task management application designed to help users organize, track, and manage their tasks efficiently. It provides a RESTful API for creating, updating, deleting, and retrieving tasks.
+Description:  
+This project is a Go-based task management application designed to help users organize, track, and manage their tasks efficiently. It follows a clean architecture approach to ensure maintainability, scalability, and separation of concerns. The application provides a RESTful API for creating, updating, deleting, and retrieving tasks.
 
 Features:
+- Clean Architecture
 - Authentication and Authorization
 - Task CRUD operations
 
