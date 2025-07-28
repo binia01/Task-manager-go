@@ -43,3 +43,26 @@ func (r Role) String() string {
 func (r Role) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.String())
 }
+
+type ITaskRepository interface {
+	GetAllTasks() ([]Task, error)
+	GetTaskById(id string) (*Task, error)
+	CreateTask(task Task) error
+	UpdateTask(id string, task Task) (*Task, error)
+	DeleteTask(id string) (*Task, error)
+}
+
+type IUserRepository interface {
+	FindByUsername(username string) (*User, error)
+	CreateUser(user User) (*User, error)
+	UpdateUserRole(username string, role Role) error
+}
+
+type IPasswordService interface {
+	HashPassword(password string) (string, error)
+	ComparePassword(hashedPassword string, password string) error
+}
+
+type IJWTService interface {
+	GenerateToken(user User) (string, error)
+}
