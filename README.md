@@ -7,5 +7,6 @@ Features:
 - Clean Architecture
 - Authentication and Authorization
 - Task CRUD operations
+- testing
 
-For detailed API usage and endpoint specifications, please refer to [api_documentation.md](./docs/api_documentation.md).
+For detailed API usage and endpoint specifications, please refer to [api_documentation.md](./docs/api_documentation.md) and [api_testing.md](./docs/api_testing.md).
