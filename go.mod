@@ -2,9 +2,18 @@ module task-manager-go
 
 go 1.24.5
 
-require github.com/gin-gonic/gin v1.10.1
+require (
+	github.com/gin-gonic/gin v1.10.1
+	github.com/stretchr/testify v1.10.0
+)
 
-require github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+require github.com/stretchr/objx v0.5.2 // indirect
+
+require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+)
 
 require (
 	github.com/golang/snappy v1.0.0 // indirect
@@ -40,7 +49,7 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.3.0 // indirect
 	golang.org/x/arch v0.19.0 // indirect
-	golang.org/x/crypto v0.40.0 // indirect
+	golang.org/x/crypto v0.40.0
 	golang.org/x/net v0.42.0 // indirect
 	golang.org/x/sys v0.34.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
