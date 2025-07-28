@@ -42,7 +42,7 @@ All API functionality remains the same, but the codebase is now organized accord
 
 2. **Set up MongoDB:**
     - This project uses MongoDB as the database. Ensure you have a MongoDB instance running.
-    - You must provide your MongoDB Atlas username and password in the connect_db function inside data/task_service.go.
+    - You must provide your MongoDB Atlas username and password in the connect_db function inside Delivery/main.go.
     - Example connection string (replace <username> and <password>):
     
       ```go
