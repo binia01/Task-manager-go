@@ -8,15 +8,11 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-type JWTService interface {
-	GenerateToken(user Domain.User) (string, error)
-}
-
 type jwtService struct {
 	secret string
 }
 
-func NewJWTService(secret string) JWTService {
+func NewJWTService(secret string) Domain.IJWTService {
 	return &jwtService{secret: secret}
 }
 

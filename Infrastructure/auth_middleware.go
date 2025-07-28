@@ -8,9 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var JwtSecret = []byte("wN7z@JrV3uK!dXp2qT$eGh8yF9cLb6mZ")
-
-func AuthMiddleware() gin.HandlerFunc {
+func AuthMiddleware(jwtSecret []byte) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		const authHeaderKey = "Authorization"
 
@@ -34,7 +32,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 			}
-			return JwtSecret, nil
+			return jwtSecret, nil
 		})
 
 		if err != nil || !token.Valid {
