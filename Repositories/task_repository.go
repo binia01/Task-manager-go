@@ -5,27 +5,18 @@ import (
 	"fmt"
 	"log"
 
+	"task-manager-go/Domain"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"task-manager-go/Domain"
 )
-
-type TaskRepository interface {
-	GetAllTasks() ([]Domain.Task, error)
-	GetTaskById(id string) (*Domain.Task, error)
-	CreateTask(task Domain.Task) error
-	UpdateTask(id string, task Domain.Task) (*Domain.Task, error)
-	DeleteTask(id string) (*Domain.Task, error)
-}
 
 type taskRepository struct {
 	collection *mongo.Collection
 }
 
-func NewTaskRepository() TaskRepository {
-	client := connectDb()
-	collection := client.Database("Task-Database").Collection("Tasks")
+func NewTaskRepository(collection *mongo.Collection) Domain.ITaskRepository {
 	return &taskRepository{collection: collection}
 }
 

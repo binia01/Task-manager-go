@@ -11,19 +11,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type UserRepository interface {
-	FindByUsername(username string) (*Domain.User, error)
-	CreateUser(user Domain.User) (*Domain.User, error)
-	UpdateUserRole(username string, role Domain.Role) error
-}
-
 type userRepository struct {
 	collection *mongo.Collection
 }
 
-func NewUserRepository() UserRepository {
-	client := connectDb()
-	collection := client.Database("Task-Database").Collection("Users")
+func NewUserRepository(collection *mongo.Collection) Domain.IUserRepository {
 	return &userRepository{collection: collection}
 }
 
