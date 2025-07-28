@@ -39,7 +39,7 @@ func main() {
 
 	passwordService := Infrastructure.NewPasswordService()
 
-	jwtSecret := os.Getenv("MONGODB_URI")
+	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
 		log.Fatal("Jwt_secret not set in environment")
 	}
