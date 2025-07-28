@@ -4,31 +4,23 @@ import (
 	"fmt"
 
 	"task-manager-go/Domain"
-	"task-manager-go/Infrastructure"
-	"task-manager-go/Repositories"
 )
 
-type UserUsecase interface {
-	Login(user Domain.User) (string, error)
-	Register(user Domain.User) (*Domain.User, error)
-	UpdateRole(username string) error
+type UserUsecase struct {
+	userRepo        Domain.IUserRepository
+	passwordService Domain.IPasswordService
+	jwtService      Domain.IJWTService
 }
 
-type userUsecase struct {
-	userRepo        Repositories.UserRepository
-	passwordService Infrastructure.PasswordService
-	jwtService      Infrastructure.JWTService
-}
-
-func NewUserUsecase(userRepo Repositories.UserRepository) UserUsecase {
-	return &userUsecase{
+func NewUserUsecase(userRepo Domain.IUserRepository, passwordService Domain.IPasswordService, jwtService Domain.IJWTService) *UserUsecase {
+	return &UserUsecase{
 		userRepo:        userRepo,
-		passwordService: Infrastructure.NewPasswordService(),
-		jwtService:      Infrastructure.NewJWTService(string(Infrastructure.JwtSecret)),
+		passwordService: passwordService,
+		jwtService:      jwtService,
 	}
 }
 
-func (uu *userUsecase) Login(user Domain.User) (string, error) {
+func (uu *UserUsecase) Login(user Domain.User) (string, error) {
 	existingUser, err := uu.userRepo.FindByUsername(user.Username)
 	if err != nil {
 		return "", fmt.Errorf("invalid username or password")
@@ -47,7 +39,7 @@ func (uu *userUsecase) Login(user Domain.User) (string, error) {
 	return token, nil
 }
 
-func (uu *userUsecase) Register(user Domain.User) (*Domain.User, error) {
+func (uu *UserUsecase) Register(user Domain.User) (*Domain.User, error) {
 	hashedPassword, err := uu.passwordService.HashPassword(user.Password)
 	if err != nil {
 		return nil, fmt.Errorf("error hashing password")
@@ -57,6 +49,6 @@ func (uu *userUsecase) Register(user Domain.User) (*Domain.User, error) {
 	return uu.userRepo.CreateUser(user)
 }
 
-func (uu *userUsecase) UpdateRole(username string) error {
+func (uu *UserUsecase) UpdateRole(username string) error {
 	return uu.userRepo.UpdateUserRole(username, Domain.AdminRole)
 }
