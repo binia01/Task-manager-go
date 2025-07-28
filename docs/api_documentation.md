@@ -39,16 +39,29 @@ All API functionality remains the same, but the codebase is now organized accord
     cd Task-manager-go
     git checkout clean-architecture
     ```
+    2. **Set up MongoDB:**
+      - This project uses MongoDB as the database. Ensure you have a MongoDB instance running.
+      - Store your MongoDB Atlas connection string in a `.env` file at the project root. Example `.env` content:
+        ```
+        MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.tj8um.mongodb.net/?retryWrites=true&w=majority
+        ```
+      - The application will read the connection string from the `.env` file using an environment variable loader (e.g., `github.com/joho/godotenv`).
+      - In `Delivery/main.go`, load the environment variable and use it in your connection code:
+        ```go
+        import (
+          "os"
+          "github.com/joho/godotenv"
+          // other imports...
+        )
 
-2. **Set up MongoDB:**
-    - This project uses MongoDB as the database. Ensure you have a MongoDB instance running.
-    - You must provide your MongoDB Atlas username and password in the connect_db function inside data/task_service.go.
-    - Example connection string (replace <username> and <password>):
-    
-      ```go
-      clientOptions := options.Client().ApplyURI("mongodb+srv://<username>:<password>@cluster0.tj8um.mongodb.net/?retryWrites=true&w=majority")
-      ```
-
+        func main() {
+          godotenv.Load()
+          mongoURI := os.Getenv("MONGODB_URI")
+          clientOptions := options.Client().ApplyURI(mongoURI)
+          // ...
+        }
+        ```
+It is the same for jwt_secret
 3. **Build and start the server:**
     ```sh
     cd Delivery
